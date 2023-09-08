@@ -1,4 +1,3 @@
-// Update your JavaScript code
 
 const APIURL =
     "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=";
@@ -23,8 +22,12 @@ const showMovies = (data) => {
     data.forEach((item) => {
         const box = document.createElement("div");
         box.classList.add("box");
+        
+        // Check if poster_path is null
+        const posterPath = item.poster_path ? IMGPATH + item.poster_path : 'image/missingimg.jpg';
+
         box.innerHTML = `
-            <img src="${IMGPATH + item.poster_path}" alt=""/>
+            <img src="${posterPath}" alt=""/>
             <div class="overlay">
                 <div class="title">
                     <h2>${item.original_title}</h2>
@@ -39,9 +42,8 @@ const showMovies = (data) => {
 };
 
 // Function to update pagination buttons
-const updatePaginationButtons = (page, totalPages) => {
+const updatePaginationButtons = (page) => {
     prevButton.disabled = page <= 1;
-    nextButton.disabled = page >= totalPages;
 };
 
 // Event listeners for pagination buttons
@@ -49,12 +51,14 @@ prevButton.addEventListener("click", () => {
     if (currentPage > 1) {
         currentPage--;
         getMovies(APIURL + currentPage);
+        updatePaginationButtons(currentPage);
     }
 });
 
 nextButton.addEventListener("click", () => {
     currentPage++;
     getMovies(APIURL + currentPage);
+    updatePaginationButtons(currentPage);
 });
 
 document.querySelector("#search").addEventListener("keyup", function (event) {
@@ -67,3 +71,4 @@ document.querySelector("#search").addEventListener("keyup", function (event) {
 
 // Initial load of movies
 getMovies(APIURL + currentPage);
+updatePaginationButtons(currentPage);

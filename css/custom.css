@@ -97,14 +97,10 @@
 
 /* Pagination buttons */
 .pagination {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-    
+    justify-content: space-between; /* Align buttons to the left and right */
+    margin-top: 20px;
+    z-index: 2; /* Ensure pagination is above footer */
 }
 
 button {
@@ -112,10 +108,22 @@ button {
     background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px 10px;
     cursor: pointer;
     font-size: 16px;
+    margin: 5px 250px; /* Add margin to create space between buttons */
+    padding: 12px 12px; /* Adjust padding for smaller screens */
+    font-size: 17px; /* Adjust font size for smaller screens */
+    
+}
+button#prev-button {
+    order: 1;
+    margin-right: 10px; /* Add margin to the right of "Previous" button */
    
+}
+
+button#next-button {
+    order: 2;
 }
 
 button:disabled {
@@ -123,6 +131,27 @@ button:disabled {
     cursor: not-allowed;
 }
 
+
+/* Add this to your css/custom.css file */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    position: relative; /* Change to relative position */
+    z-index: 1; /* Ensure footer is above other content */
+}
+footer a {
+    color: #fff; /* Link color */
+    text-decoration: none; /* Remove underline from links */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+footer a{
+    cursor: pointer;
+}
 
 /* Media queries for responsiveness */
 
@@ -138,6 +167,11 @@ button:disabled {
         width: 50%; /* Adjust box size for smaller screens */
         flex-basis: calc(50% - 20px);
     }
+    button {
+        padding: 8px 16px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Adjust font size for smaller screens */
+        margin: 5px 10px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -149,4 +183,16 @@ button:disabled {
     #search {
         font-size: 18px;
     }
+}
+
+@media screen and (max-width: 360px) {
+    .main {
+        max-width: 360px;
+    }
+}
+@media screen and (min-width: 361px) {
+    .marquee {
+        display: flex;
+    }
+    
 }
