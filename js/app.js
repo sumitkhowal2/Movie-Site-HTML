@@ -1,54 +1,69 @@
+// Update your JavaScript code
+
 const APIURL =
-    "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+    "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=";
 const IMGPATH = "https://image.tmdb.org/t/p/w1280";
 const SEARCHAPI =
     "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
-    const moviesbox = document.querySelector("#movie-box")
-const getMovies = async(api) =>
-{
-    const response = await fetch(api)
-    const data = await response.json()
-    //console.log(data);
-    showMovies(data.results)
+const moviesbox = document.querySelector("#movie-box");
+const prevButton = document.querySelector("#prev-button");
+const nextButton = document.querySelector("#next-button");
 
-}
-const showMovies = (data) =>
-{
-  moviesbox.innerHTML="";
- data.forEach(
-    (item) => {
-        //console.log(item)
-        const box = document.createElement("div")
-        box.classList.add("box")
+let currentPage = 1;
+
+const getMovies = async (api) => {
+    const response = await fetch(api);
+    const data = await response.json();
+    showMovies(data.results);
+};
+
+const showMovies = (data) => {
+    moviesbox.innerHTML = "";
+    data.forEach((item) => {
+        const box = document.createElement("div");
+        box.classList.add("box");
         box.innerHTML = `
-        <img src="${IMGPATH + item.poster_path}" alt=""/>
-        <div class="overlay">
-            <div class="title">
-                <h2>${item.original_title}</h2>
-                <span>${item.vote_average}</span>
+            <img src="${IMGPATH + item.poster_path}" alt=""/>
+            <div class="overlay">
+                <div class="title">
+                    <h2>${item.original_title}</h2>
+                    <span>${item.vote_average}</span>
+                </div>
+                <h3>OverView:</h3>
+                <p>${item.overview}</p>
             </div>
-            <h3>OverView:</h3>
-            <p>
-            ${item.overview}
-            </p>
-        </div>
         `;
-        //console.log(data)
-        moviesbox.appendChild(box)
-    
- });
-}
-document.querySelector("#search").addEventListener(
-    "keyup",
-    function(event){
-        if(event.target.value !=""){
-            getMovies(SEARCHAPI + event.target.value)
-        }
-        else{
-            getMovies(APIURL)
-        }
-        
+        moviesbox.appendChild(box);
+    });
+};
+
+// Function to update pagination buttons
+const updatePaginationButtons = (page, totalPages) => {
+    prevButton.disabled = page <= 1;
+    nextButton.disabled = page >= totalPages;
+};
+
+// Event listeners for pagination buttons
+prevButton.addEventListener("click", () => {
+    if (currentPage > 1) {
+        currentPage--;
+        getMovies(APIURL + currentPage);
     }
-)
-getMovies(APIURL);
+});
+
+nextButton.addEventListener("click", () => {
+    currentPage++;
+    getMovies(APIURL + currentPage);
+});
+
+document.querySelector("#search").addEventListener("keyup", function (event) {
+    if (event.target.value !== "") {
+        getMovies(SEARCHAPI + event.target.value);
+    } else {
+        getMovies(APIURL + currentPage);
+    }
+});
+
+// Initial load of movies
+getMovies(APIURL + currentPage);
