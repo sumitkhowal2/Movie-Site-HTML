@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="css/custom.css">
      <!-- Add the following line to link your favicon -->
      <link rel="icon" href="image/favicon (1).ico" type="image/x-icon">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+
 </head>
 <body>
     <div class="main">
-    
+         
             <marquee direction="right" behavior="alternate"><img src="image/text.gif"/></marquee>
         <div class="row" style="justify-content: center;">
             <input type="search" id="search" autofocus autocomplete="off" placeholder="Search here..." />
@@ -20,14 +22,19 @@
         <div class="row" id="movie-box">
 
         </div>
+        <button id="scroll-up" title="Scroll Up"><i class="fas fa-chevron-up"></i></button>
         <div class="pagination">
             <button id="prev-button" disabled>Previous</button>
             <button id="next-button">Next</button>
         </div>
+        <button id="scroll-down" title="Scroll Down"><i class="fas fa-chevron-down"></i></button>
     </div>
+    
     <footer>
         <p>&copy; 2023 SK Movies Hub. All rights reserved. Developed and Designed by <a href="https://sumit-khowal-tech-company.business.site/" target="_blank">Sumit Khowal</a></p>
     </footer>
+   
+
     <script src="js/app.js"></script>
 </body>
 </html>

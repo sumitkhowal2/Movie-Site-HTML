@@ -69,6 +69,42 @@ document.querySelector("#search").addEventListener("keyup", function (event) {
     }
 });
 
+
+// Get references to scroll buttons
+const scrollUpButton = document.getElementById("scroll-up");
+const scrollDownButton = document.getElementById("scroll-down");
+
+// Scroll up when the up button is clicked
+scrollUpButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// Scroll down when the down button is clicked
+scrollDownButton.addEventListener("click", () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+});
+
+// Show/hide scroll buttons based on scroll position
+window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    
+    // Show the scroll-up button when scrolled down
+    if (scrollY > 100) {
+        scrollUpButton.style.display = "block";
+    } else {
+        scrollUpButton.style.display = "none";
+    }
+
+    // Show the scroll-down button when not at the bottom
+    if (scrollY < document.body.scrollHeight - window.innerHeight) {
+        scrollDownButton.style.display = "block";
+    } else {
+        scrollDownButton.style.display = "none";
+    }
+});
+
+
+
 // Initial load of movies
 getMovies(APIURL + currentPage);
 updatePaginationButtons(currentPage);
